@@ -1,0 +1,7 @@
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram1_Test\obj\Debug\MentoringProgram1_Test.csprojResolveAssemblyReference.cache
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram1_Test\bin\Debug\MentoringProgram1_Test.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram1_Test\bin\Debug\MentoringProgram1_Test.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram1_Test\bin\Debug\MentoringProgram.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram1_Test\bin\Debug\MentoringProgram.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram1_Test\obj\Debug\MentoringProgram1_Test.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram1_Test\obj\Debug\MentoringProgram1_Test.pdb

@@ -1,0 +1,6 @@
+c:\users\petr_chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram\bin\Release\MentoringProgram.exe.config
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram\bin\Release\MentoringProgram.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram\bin\Release\MentoringProgram.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram\obj\Release\MentoringProgram.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram\obj\Release\MentoringProgram.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram\obj\Release\MentoringProgram1.csprojResolveAssemblyReference.cache

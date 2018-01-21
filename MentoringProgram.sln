@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentoringProgram1", "MentoringProgram\MentoringProgram1.csproj", "{CBBB7FDF-176C-47FE-A250-5CD2E6FC038F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentoringProgram1_Test", "MentoringProgram1_Test\MentoringProgram1_Test.csproj", "{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBBB7FDF-176C-47FE-A250-5CD2E6FC038F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBBB7FDF-176C-47FE-A250-5CD2E6FC038F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBBB7FDF-176C-47FE-A250-5CD2E6FC038F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBBB7FDF-176C-47FE-A250-5CD2E6FC038F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

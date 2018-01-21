@@ -1,0 +1,1 @@
+c:\users\petr_chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram\bin\Debug\MentoringProgram.exe.config
