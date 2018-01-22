@@ -39,6 +39,7 @@ namespace MentoringProgram
         protected virtual void OnFinish(SearchingProcessArgs args)
         {
             var tmp = FinishProcess;
+            // повторяющийся код
             if (tmp != null)
                 tmp(this, args);
         }
@@ -124,6 +125,7 @@ namespace MentoringProgram
                         SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
                         OnFilteredFolderFinded(args);
                         
+                        //я это уже видел....
                         if (args.StopFlag)
                             break;
                     }

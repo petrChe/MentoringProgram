@@ -74,6 +74,7 @@ namespace MentoringProgram1
             Console.WriteLine("Исключить файл из конечного списка? y - да, n - нет");
             var answer = Console.ReadLine();
 
+            // что если я введу что либо не удослетворющее обоим условиям
             if (answer.ToLower() == "y")
                 args.SkipFlag = true;
             else if (answer.ToLower() == "n")
@@ -87,6 +88,7 @@ namespace MentoringProgram1
             Console.WriteLine("Исключить папку из конечного списка? y - да, n - нет");
             var answer = Console.ReadLine();
 
+            // одно и то же 1000 раз, рефакторить
             if (answer.ToLower() == "y")
                 args.SkipFlag = true;
             else if (answer.ToLower() == "n")

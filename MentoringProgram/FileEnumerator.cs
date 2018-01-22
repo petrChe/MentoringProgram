@@ -9,6 +9,8 @@ namespace MentoringProgram
 {
     public class FileEnumerator
     {
+        // рефакторить
+        //Большой метод, рефакторить
         public static IEnumerable<UsingFile> GetAllFilesByPath(string folderName)
         {
             List<UsingFile> files = new List<UsingFile>();
@@ -30,7 +32,7 @@ namespace MentoringProgram
                             LastModificationDateString = lastModifDate.ToString("dd.MM.yyyy"),
                             IsFolder = true
                         };
-                        files.Add(folder);
+                        files.Add(folder); // миллион мест добавления файла, что если ты решишь их помещать в новую коллекцию...
 
                         if (Directory.EnumerateFileSystemEntries(folderPath).Any())
                         {
@@ -47,7 +49,7 @@ namespace MentoringProgram
                         {
                             FileName = fileInfo.Name,
                             ShortName = Path.GetFileName(fileInfo.Name),
-                            LastModificationDateString = lastModifDate.ToString("dd.MM.yyyy"),
+                            LastModificationDateString = lastModifDate.ToString("dd.MM.yyyy"), //что если формат захочу еще где то юзать
                             Extension = fileExtension,
                             IsFolder = false
                         };
@@ -55,7 +57,7 @@ namespace MentoringProgram
                     }
                 }
                 else
-                    throw new ArgumentException("Вы ввели неправильный путь");
+                    throw new ArgumentException("Вы ввели неправильный путь"); // убрать все выводы подобного типа, используй словари
             }
             catch(ArgumentException ex)
             {
