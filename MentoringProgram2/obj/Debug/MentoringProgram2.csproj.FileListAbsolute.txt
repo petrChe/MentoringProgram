@@ -6,3 +6,11 @@ C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\
 C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram2\obj\Debug\MentoringProgram2.pdb
 C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram2\bin\Debug\Castle.Core.dll
 C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram2\bin\Debug\Castle.Core.xml
+E:\ment\MentoringProgram\MentoringProgram2\bin\Debug\MentoringProgram2.exe.config
+E:\ment\MentoringProgram\MentoringProgram2\obj\Debug\MentoringProgram2.exe
+E:\ment\MentoringProgram\MentoringProgram2\obj\Debug\MentoringProgram2.pdb
+E:\ment\MentoringProgram\MentoringProgram2\bin\Debug\MentoringProgram2.exe
+E:\ment\MentoringProgram\MentoringProgram2\bin\Debug\MentoringProgram2.pdb
+E:\ment\MentoringProgram\MentoringProgram2\bin\Debug\Castle.Core.dll
+E:\ment\MentoringProgram\MentoringProgram2\bin\Debug\Castle.Core.xml
+E:\ment\MentoringProgram\MentoringProgram2\obj\Debug\MentoringProgram2.csprojResolveAssemblyReference.cache

@@ -17,11 +17,11 @@ namespace MentoringProgram2
             try
             {
                 var chars = str.ToCharArray();
-
                 for (var i = 0; i < chars.Length; i++)
                 {
                     if (Char.IsLetter(chars[i]))
-                        throw new MyOwnException(i + 1, "В строке не должно быть буквенных символов. Позиция элемента - ");
+                        // вынесите пожалуйста все в ресурсы // можешь создать отдельное приложение для всех своих будущих задач, учись писать красиво + это незаменимая штука если приклад мультиязычный
+                        throw new MyOwnException(i + 1, "В строке не должно быть буквенных символов. Позиция элемента - "); // избавиться от i + 1 (назвать мне как минимум 2 способа)
                     if(Char.IsWhiteSpace(chars[i]))
                         throw new MyOwnException(i + 1, "В строке не должно быть пробелов. Позиция элемента - ");
                     if(Char.IsPunctuation(chars[i]))
