@@ -91,15 +91,16 @@ namespace MentoringProgram
         /// <param name="type"></param>
         /// <param name="parametr"></param>
         /// <param name="directoryPath"></param>
-        public void StartWork(string type, string parametr, string directoryPath)
+        public void StartWork(string type, string parametr, string directoryPath) 
         {
             OnStart(new SearchingProcessArgs());
-            
+
+            // зачем свич если все 3 блока одинаковые....
             switch (type)
             { 
                 case "ex":
                     FindedFiles = AllFindedFilesFromDirectory(directoryPath);
-                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr); 
+                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr);  // зачем передавать фильтр если это глобальная переменная
                     break;
                 case "beggins":
                     FindedFiles = AllFindedFilesFromDirectory(directoryPath);
@@ -122,6 +123,7 @@ namespace MentoringProgram
         {
             if (Errors.Count > 0)
             {
+                // Ходят легенды что это быстрее он сам умеет многопоточность Errors.ToList().ForEach
                 foreach (var error in Errors)
                     Console.WriteLine(error.Value);
             }
@@ -140,12 +142,12 @@ namespace MentoringProgram
             {
                 var files = filesEnumerator.GetAllFilesByPath(folderName);
 
-                if (files.Count() == 0)
+                if (files.Count() == 0)// Валидация не дожна заказчиваться выкидыванием исключения - переделать
                     throw new IndexOutOfRangeException("Исключение");
 
                 foreach (var file in files)
                 {
-                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
+                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString }; // зачем миллион раз создавать переменную, внутри цикла только операции, переделать
 
                     if (file.IsFolder)
                     {
@@ -186,7 +188,7 @@ namespace MentoringProgram
                 foreach (var file in files)
                 {
                     //проверка
-                    if (!validator.IsValid(filterDetail))
+                    if (!validator.IsValid(filterDetail)) // Валидация не дожна заказчиваться выкидыванием исключения - переделать
                         throw new ArgumentException("Вы ввели неправильное расширение файла");
 
                     SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
