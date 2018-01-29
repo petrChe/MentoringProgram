@@ -1,0 +1,143 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MentoringProgram.Helpers;
+using MentoringProgram.Interfaces;
+
+namespace MentoringProgram
+{
+    public class FileEnumerator : IFilesEnumerator
+    {
+<<<<<<< HEAD
+        /// <summary>
+        /// Метод поиска файлов(файлы и папки) по передаваемому пути
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <returns></returns>
+        public IEnumerable<UsingFile> GetAllFilesByPath(string folderName)
+=======
+        // рефакторить
+        //Большой метод, рефакторить
+        public static IEnumerable<UsingFile> GetAllFilesByPath(string folderName)
+>>>>>>> 6f479ddf46da8c9354d8477b8d8b71912c4ed8f0
+        {
+            List<UsingFile> files = new List<UsingFile>();
+
+            try
+            {
+                if (Directory.Exists(folderName))
+                {
+                    DirectoryInfo directory = new DirectoryInfo(folderName);
+
+<<<<<<< HEAD
+                    GetDirectories(files, directory);
+
+                    GetFiles(files, directory);
+                }
+                else
+                    throw new ArgumentException("Вы ввели неправильный путь директории");
+=======
+                    foreach (DirectoryInfo dirInfo in directory.GetDirectories())
+                    {
+                        string folderPath = string.Format(@"{0}\{1}", Path.GetDirectoryName(dirInfo.FullName), dirInfo.Name);
+                        DateTime lastModifDate = Directory.GetLastWriteTime(dirInfo.FullName);
+                        UsingFile folder = new UsingFile
+                        {
+                            FileName = dirInfo.FullName,
+                            ShortName = Path.GetFileName(dirInfo.FullName),
+                            LastModificationDateString = lastModifDate.ToString("dd.MM.yyyy"),
+                            IsFolder = true
+                        };
+                        files.Add(folder); // миллион мест добавления файла, что если ты решишь их помещать в новую коллекцию...
+
+                        if (Directory.EnumerateFileSystemEntries(folderPath).Any())
+                        {
+                            files.AddRange(GetAllFilesByPath(folderPath));
+                        }
+                    }
+
+                    foreach (FileInfo fileInfo in directory.GetFiles())
+                    {
+                        string fileExtension = Path.GetExtension(fileInfo.Name);
+                        string filePath = string.Format(@"{0}\{1}", fileInfo.DirectoryName, fileInfo.Name);
+                        DateTime lastModifDate = File.GetLastWriteTime(filePath);
+                        UsingFile file = new UsingFile
+                        {
+                            FileName = fileInfo.Name,
+                            ShortName = Path.GetFileName(fileInfo.Name),
+                            LastModificationDateString = lastModifDate.ToString("dd.MM.yyyy"), //что если формат захочу еще где то юзать
+                            Extension = fileExtension,
+                            IsFolder = false
+                        };
+                        files.Add(file);
+                    }
+                }
+                else
+                    throw new ArgumentException("Вы ввели неправильный путь"); // убрать все выводы подобного типа, используй словари
+>>>>>>> 6f479ddf46da8c9354d8477b8d8b71912c4ed8f0
+            }
+            catch(ArgumentException)
+            {
+                throw;
+            }
+
+            foreach (var file in files)
+                yield return file;
+        
+        }
+
+        /// <summary>
+        /// Получаем все файлы
+        /// </summary>
+        /// <param name="files"></param>
+        /// <param name="directory"></param>
+        private void GetFiles(List<UsingFile> files, DirectoryInfo directory)
+        {
+            foreach (FileInfo fileInfo in directory.GetFiles())
+            {
+                string fileExtension = Path.GetExtension(fileInfo.Name);
+                string filePath = string.Format(@"{0}\{1}", fileInfo.DirectoryName, fileInfo.Name);
+                DateTime lastModifDate = File.GetLastWriteTime(filePath);
+                UsingFile file = new UsingFile
+                {
+                    FileName = fileInfo.Name,
+                    ShortName = Path.GetFileName(fileInfo.Name),
+                    LastModificationDateString = lastModifDate.ToString(HelperConsts.DataFormat),
+                    Extension = fileExtension,
+                    IsFolder = false
+                };
+                files.Add(file);
+            }
+        }
+
+        /// <summary>
+        /// Получаем все папки
+        /// </summary>
+        /// <param name="files"></param>
+        /// <param name="directory"></param>
+        private void GetDirectories(List<UsingFile> files, DirectoryInfo directory)
+        {
+            foreach (DirectoryInfo dirInfo in directory.GetDirectories())
+            {
+                string folderPath = string.Format(@"{0}\{1}", Path.GetDirectoryName(dirInfo.FullName), dirInfo.Name);
+                DateTime lastModifDate = Directory.GetLastWriteTime(dirInfo.FullName);
+                UsingFile folder = new UsingFile
+                {
+                    FileName = dirInfo.FullName,
+                    ShortName = Path.GetFileName(dirInfo.FullName),
+                    LastModificationDateString = lastModifDate.ToString(HelperConsts.DataFormat),
+                    IsFolder = true
+                };
+                files.Add(folder);
+
+                if (Directory.EnumerateFileSystemEntries(folderPath).Any())
+                {
+                    files.AddRange(GetAllFilesByPath(folderPath));
+                }
+            }
+        }
+    }
+}
