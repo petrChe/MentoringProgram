@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MentoringProgram;
+using MentoringProgram.Helpers;
+using MentoringProgram.Interfaces;
 
 namespace MentoringProgram1
 {
@@ -11,31 +13,50 @@ namespace MentoringProgram1
     {
         static void Main(string[] args)
         {
-            Func<UsingFile, string, bool> Filter = Ex;
+            //Настройка кодировки
+            Console.OutputEncoding = Encoding.UTF8;
+
+            Func<UsingFile, string, bool> filter = (UsingFile file, string fileExtension) => file.Extension == fileExtension;
+            IFilesEnumerator filesEnumerator = new FileEnumerator();
 
             Console.WriteLine("Введите путь:");
             var directoryPath = Console.ReadLine();
-            FileSystemVisitor fileSystemVisitor = new FileSystemVisitor(Filter, directoryPath);
+            FileSystemVisitor fileSystemVisitor = new FileSystemVisitor(filesEnumerator, filter, directoryPath);
             PrepareForSearching(fileSystemVisitor);
 
             //Фильтрация по методу расширения
             Console.WriteLine("Введите расширение файла:");
             var extension = Console.ReadLine();
+            
             fileSystemVisitor.StartWork("ex", extension, fileSystemVisitor.Path);
 
-            //Фильтрация по началу имени файла/папки
+            //Фильтрация по началу имени файла/папки          
+            fileSystemVisitor.Filter = (UsingFile file, string beggining) => 
+            {
+                var lettersCount = beggining.Length;
+                return file.ShortName.Substring(0, lettersCount).ToLower() == beggining.ToLower();
+            };
+
             Console.WriteLine("Введите символ(ы) с которого(ых) должно начинаться имя файла/папки:");
             var begging = Console.ReadLine();
+
             fileSystemVisitor.StartWork("beggins", begging, fileSystemVisitor.Path);
 
             //Фильтрация по части имени файла
+            fileSystemVisitor.Filter = (UsingFile file, string partOfName) => file.FileName.Contains(partOfName);
+
             Console.WriteLine("Введите символ(ы) который(ые) присутствуют в имени файла/папки:");
-            var contains  = Console.ReadLine();
+            var contains = Console.ReadLine();
+            
             fileSystemVisitor.StartWork("contains", contains, fileSystemVisitor.Path);
 
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Подписка на события
+        /// </summary>
+        /// <param name="visitor"></param>
         public static void PrepareForSearching(FileSystemVisitor visitor)
         {
             visitor.StartProcess += Searching_Start;
@@ -46,6 +67,7 @@ namespace MentoringProgram1
             visitor.FilteredFolderFinded += FilteredDirectory_Finded;
         }
 
+        #region Обработчики событий
         private static void Searching_Start(object sender, FileSystemVisitor.SearchingProcessArgs args)
         {
             Console.WriteLine("Начало работы поиска");
@@ -63,8 +85,7 @@ namespace MentoringProgram1
             Console.WriteLine("Прервать поиск? y - да, n - нет");
             var answer = Console.ReadLine();
 
-            if (answer.ToLower() == "y")
-                args.StopFlag = true;
+            EnableFlags(HelperEnums.FlagTypes.StopFlag, answer, args);
         }
 
         private static void File_Finded(object sender, FileSystemVisitor.SearchingProcessArgs args)
@@ -74,10 +95,7 @@ namespace MentoringProgram1
             Console.WriteLine("Исключить файл из конечного списка? y - да, n - нет");
             var answer = Console.ReadLine();
 
-            if (answer.ToLower() == "y")
-                args.SkipFlag = true;
-            else if (answer.ToLower() == "n")
-                args.SkipFlag = false;
+            EnableFlags(HelperEnums.FlagTypes.SkipFlag, answer, args);
         }
 
         private static void Directory_Finded(object sender, FileSystemVisitor.SearchingProcessArgs args)
@@ -87,10 +105,7 @@ namespace MentoringProgram1
             Console.WriteLine("Исключить папку из конечного списка? y - да, n - нет");
             var answer = Console.ReadLine();
 
-            if (answer.ToLower() == "y")
-                args.SkipFlag = true;
-            else if (answer.ToLower() == "n")
-                args.SkipFlag = false;
+            EnableFlags(HelperEnums.FlagTypes.SkipFlag, answer, args);
         }
 
         protected static void FilteredDirectory_Finded(object sender, FileSystemVisitor.SearchingProcessArgs args)
@@ -100,15 +115,41 @@ namespace MentoringProgram1
             Console.WriteLine("Прервать поиск? y - да, n - нет");
             var answer = Console.ReadLine();
 
-            if (answer.ToLower() == "y")
-                args.StopFlag = true;
-            else if (answer.ToLower() == "n")
-                args.StopFlag = false;
+            EnableFlags(HelperEnums.FlagTypes.StopFlag, answer, args);
         }
+        #endregion
 
-        public static bool Ex(UsingFile file, string str)
+        /// <summary>
+        /// Диалог с пользователем. Задание значений для флагов в аргументах
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="answer"></param>
+        /// <param name="args"></param>
+        public static void EnableFlags(HelperEnums.FlagTypes type, string answer, FileSystemVisitor.SearchingProcessArgs args)
         {
-            return false;
+            if(answer.ToLower() != "y" && answer.ToLower() != "n")
+            {
+                Console.WriteLine("Ошибка. Вы ввели неправильную информацию. Попробуйте снова");
+                EnableFlags(type, Console.ReadLine(), args);
+            }
+
+            switch(type)
+            {
+                case HelperEnums.FlagTypes.SkipFlag:
+                    if (answer.ToLower() == "y")
+                        args.SkipFlag = true;
+                    else
+                        args.SkipFlag = false;
+                    break;
+                case HelperEnums.FlagTypes.StopFlag:
+                    if (answer.ToLower() == "y")
+                        args.StopFlag = true;
+                    else
+                        args.StopFlag = false;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

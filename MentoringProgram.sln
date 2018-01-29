@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentoringProgram1", "Mentor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentoringProgram1_Test", "MentoringProgram1_Test\MentoringProgram1_Test.csproj", "{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentoringProgram2", "MentoringProgram2\MentoringProgram2.csproj", "{3378C96D-0496-406A-951B-5E14E6E37E5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AEB2886-E9FA-43BC-A562-9DCEF3AB09EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3378C96D-0496-406A-951B-5E14E6E37E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3378C96D-0496-406A-951B-5E14E6E37E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3378C96D-0496-406A-951B-5E14E6E37E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3378C96D-0496-406A-951B-5E14E6E37E5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,21 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MentoringProgram.Helpers;
+using MentoringProgram.Interfaces;
 
 namespace MentoringProgram
 {
-    public class FileSystemVisitor : IFileSearching
+    public class FileSystemVisitor
     {
-        private Func<UsingFile, string, bool> Filter;
+        private readonly IFilesEnumerator filesEnumerator;
+        private readonly IValidation validator = new HelperValidation();
+
+        private Func<UsingFile, string, bool> filter;
+        public Func<UsingFile, string, bool> Filter { get { return filter; } set { this.filter = value; } }
         
         private string path;
-
         public string Path { get { return path; } set { this.path = value; } }
 
-        public FileSystemVisitor(Func<UsingFile, string, bool> Filter, string path)
+        public IEnumerable<UsingFile> FindedFiles{ get; private set;}
+
+        //Словарь ошибок
+        private Dictionary<string, string> Errors;
+
+        public FileSystemVisitor(IFilesEnumerator filesEnumerator, Func<UsingFile, string, bool> filter, string path)
         {
-            this.Filter = Filter;
+            this.filesEnumerator = filesEnumerator;
+            this.filter = filter;
             this.path = path;
+            Errors = new Dictionary<string, string>();
         }
 
         #region events
@@ -32,47 +44,53 @@ namespace MentoringProgram
         protected virtual void OnStart(SearchingProcessArgs args)
         {
             var tmp = StartProcess;
-            if (tmp != null)
-                tmp(this, args);
+            RunEvent(tmp, args);
         }
 
         protected virtual void OnFinish(SearchingProcessArgs args)
         {
             var tmp = FinishProcess;
-            if (tmp != null)
-                tmp(this, args);
+            RunEvent(tmp, args);
         }
 
         protected virtual void OnFileFinded(SearchingProcessArgs args)
         {
             var tmp = FileFinded;
-            if (tmp != null)
-                tmp(this, args);
+            RunEvent(tmp, args);
         }
 
         protected virtual void OnFilteredFileFinded(SearchingProcessArgs args)
         {
             var tmp = FilteredFileFinded;
-            if (tmp != null)
-                tmp(this, args);
+            RunEvent(tmp, args);
         }
 
         protected virtual void OnFolderFinded(SearchingProcessArgs args)
         {
             var tmp = FolderFinded;
-            if (tmp != null)
-                tmp(this, args);
+            RunEvent(tmp, args);
         }
 
         protected virtual void OnFilteredFolderFinded(SearchingProcessArgs args)
         {
             var tmp = FilteredFolderFinded;
+            RunEvent(tmp, args);
+        }
+
+        private void RunEvent(EventHandler<SearchingProcessArgs> tmp, SearchingProcessArgs args)
+        {
             if (tmp != null)
                 tmp(this, args);
         }
 
         #endregion
 
+        /// <summary>
+        /// Метод начало работы
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="parametr"></param>
+        /// <param name="directoryPath"></param>
         public void StartWork(string type, string parametr, string directoryPath)
         {
             OnStart(new SearchingProcessArgs());
@@ -80,65 +98,133 @@ namespace MentoringProgram
             switch (type)
             { 
                 case "ex":
-                    AllFilteredFilesFromDirectory(FileSystemVisitor.Filtrator.FilterByFileType, parametr, directoryPath);
+                    FindedFiles = AllFindedFilesFromDirectory(directoryPath);
+                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr); 
                     break;
                 case "beggins":
-                    AllFilteredFilesFromDirectory(FileSystemVisitor.Filtrator.FilterByBeginsWith, parametr, directoryPath);
+                    FindedFiles = AllFindedFilesFromDirectory(directoryPath);
+                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr); 
                     break;
                 case "contains":
-                    AllFilteredFilesFromDirectory(FileSystemVisitor.Filtrator.FilterByContains, parametr, directoryPath);
+                    FindedFiles = AllFindedFilesFromDirectory(directoryPath);
+                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr); 
                     break;
                 default:
                     break;
             }
 
+            ShowErrors();
+
             OnFinish(new SearchingProcessArgs());
         }
 
-        public void AllFilteredFilesFromDirectory(Func<UsingFile, string, bool> Filter, string filterDetail, string folderName)
+        public void ShowErrors()
         {
-            var files = FileEnumerator.GetAllFilesByPath(folderName);
-            foreach (var file in files)
+            if (Errors.Count > 0)
             {
-                if (file.IsFolder)
-                {
-                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
-                    OnFolderFinded(args);
-
-                    if (args.SkipFlag)
-                        continue;
-                }
-                else
-                {
-                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
-                    OnFileFinded(args);
-
-                    if (args.SkipFlag)
-                        continue;
-                }
-
-                if (Filter(file, filterDetail))
-                {
-                    if (file.IsFolder)
-                    {
-                        SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
-                        OnFilteredFolderFinded(args);
-                        
-                        if (args.StopFlag)
-                            break;
-                    }
-                    else
-                    {
-                        SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
-                        OnFilteredFileFinded(args);
-                        
-                        if (args.StopFlag)
-                            break;
-                    }
-                }     
+                foreach (var error in Errors)
+                    Console.WriteLine(error.Value);
             }
         }
 
+        /// <summary>
+        /// С помощью класса enumerator(а) получаем объекты(файлы и папки) и взаимодействуем с ними
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <returns></returns>
+        public IEnumerable<UsingFile> AllFindedFilesFromDirectory(string folderName)
+        {
+            var findedFiles = new List<UsingFile>();
+
+            try
+            {
+                var files = filesEnumerator.GetAllFilesByPath(folderName);
+
+                if (files.Count() == 0)
+                    throw new IndexOutOfRangeException("Исключение");
+
+                foreach (var file in files)
+                {
+                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
+
+                    if (file.IsFolder)
+                    {
+                        OnFolderFinded(args);
+
+                        if (args.SkipFlag)
+                            continue;
+                        else
+                            findedFiles.Add(file);
+                    }
+                    else
+                    {
+                        OnFileFinded(args);
+
+                        if (args.SkipFlag)
+                            continue;
+                        else
+                            findedFiles.Add(file);
+                    }
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                Errors.Add(ex.TargetSite.ToString(), ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Errors.Add(ex.TargetSite.ToString(), HelperConsts.CommonError);     
+            }
+
+            return findedFiles;
+        }
+
+        public void AllFilteredFilesFromDirectory(Func<UsingFile, string, bool> Filter, IEnumerable<UsingFile> files, string filterDetail)
+        {
+            try
+            {
+                foreach (var file in files)
+                {
+                    //проверка
+                    if (!validator.IsValid(filterDetail))
+                        throw new ArgumentException("Вы ввели неправильное расширение файла");
+
+                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
+
+                    if (Filter(file, filterDetail))
+                    {
+                        if (file.IsFolder)
+                        {
+                            OnFilteredFolderFinded(args);
+
+                            if (args.StopFlag)
+                                break;
+                        }
+                        else
+                        {
+                            OnFilteredFileFinded(args);
+
+                            if (args.StopFlag)
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                //Запись ошибки в журнал ошибок
+                Errors.Add(ex.TargetSite.ToString(), ex.Message);
+            }
+            catch (Exception ex)
+            {
+                //Запись ошибки в журнал ошибок
+                Errors.Add(ex.TargetSite.ToString(), HelperConsts.CommonError);
+            }
+        }
+
+        /// <summary>
+        /// Класс аргументов для использования с событиями
+        /// </summary>
         public class SearchingProcessArgs
         {
             public string FileName { get; set; }
@@ -147,27 +233,7 @@ namespace MentoringProgram
 
             public bool StopFlag { get; set; }
 
-            public bool SkipFlag { get; set; }
-        }
-
-        public class Filtrator
-        {
-            public static bool FilterByFileType(UsingFile file, string extension)
-            {
-                return file.Extension == extension;                 
-            }
-
-            public static bool FilterByBeginsWith(UsingFile file, string beggining)
-            {
-                var lettersCount = beggining.Length;
-
-                return file.ShortName.Substring(0, lettersCount).ToLower() == beggining.ToLower();
-            }
-
-            public static bool FilterByContains(UsingFile file, string partOfName)
-            {
-                return file.FileName.Contains(partOfName);            
-            }
+            public bool SkipFlag { get; set; }          
         }
     }
 }
