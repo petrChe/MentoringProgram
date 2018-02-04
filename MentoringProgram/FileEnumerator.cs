@@ -11,6 +11,14 @@ namespace MentoringProgram
 {
     public class FileEnumerator : IFilesEnumerator
     {
+        //Словарь ошибок
+        private List<string> errors;
+
+        public FileEnumerator()
+        {
+            errors = new List<string>();
+        }
+
         /// <summary>
         /// Метод поиска файлов(файлы и папки) по передаваемому пути
         /// </summary>
@@ -20,23 +28,16 @@ namespace MentoringProgram
         {
             List<UsingFile> files = new List<UsingFile>();
 
-            try
+            if (Directory.Exists(folderName))
             {
-                if (Directory.Exists(folderName))
-                {
-                    DirectoryInfo directory = new DirectoryInfo(folderName);
+                DirectoryInfo directory = new DirectoryInfo(folderName);
+                
+                GetDirectories(files, directory);
 
-                    GetDirectories(files, directory);
-
-                    GetFiles(files, directory);
-                }
-                else
-                    throw new ArgumentException("Вы ввели неправильный путь директории");
+                GetFiles(files, directory);
             }
-            catch(ArgumentException)
-            {
-                throw;
-            }
+            else
+                errors.Add("Вы ввели неправильный путь директории");
 
             foreach (var file in files)
                 yield return file;

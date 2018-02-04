@@ -27,8 +27,8 @@ namespace MentoringProgram1
             //Фильтрация по методу расширения
             Console.WriteLine("Введите расширение файла:");
             var extension = Console.ReadLine();
-            
-            fileSystemVisitor.StartWork("ex", extension, fileSystemVisitor.Path);
+
+            fileSystemVisitor.StartWork(extension, fileSystemVisitor.Path);
 
             //Фильтрация по началу имени файла/папки          
             fileSystemVisitor.Filter = (UsingFile file, string beggining) => 
@@ -40,15 +40,15 @@ namespace MentoringProgram1
             Console.WriteLine("Введите символ(ы) с которого(ых) должно начинаться имя файла/папки:");
             var begging = Console.ReadLine();
 
-            fileSystemVisitor.StartWork("beggins", begging, fileSystemVisitor.Path);
+            fileSystemVisitor.StartWork(begging, fileSystemVisitor.Path);
 
             //Фильтрация по части имени файла
             fileSystemVisitor.Filter = (UsingFile file, string partOfName) => file.FileName.Contains(partOfName);
 
             Console.WriteLine("Введите символ(ы) который(ые) присутствуют в имени файла/папки:");
             var contains = Console.ReadLine();
-            
-            fileSystemVisitor.StartWork("contains", contains, fileSystemVisitor.Path);
+
+            fileSystemVisitor.StartWork(contains, fileSystemVisitor.Path);
 
             Console.ReadKey();
         }

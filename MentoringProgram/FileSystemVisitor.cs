@@ -21,15 +21,15 @@ namespace MentoringProgram
 
         public IEnumerable<UsingFile> FindedFiles{ get; private set;}
 
-        //Словарь ошибок
-        private Dictionary<string, string> Errors;
+        //Коллекция ошибок
+        private List<string> errors;
 
         public FileSystemVisitor(IFilesEnumerator filesEnumerator, Func<UsingFile, string, bool> filter, string path)
         {
             this.filesEnumerator = filesEnumerator;
             this.filter = filter;
             this.path = path;
-            Errors = new Dictionary<string, string>();
+            errors = new List<string>();
         }
 
         #region events
@@ -91,27 +91,12 @@ namespace MentoringProgram
         /// <param name="type"></param>
         /// <param name="parametr"></param>
         /// <param name="directoryPath"></param>
-        public void StartWork(string type, string parametr, string directoryPath)
+        public void StartWork(string parametr, string directoryPath)
         {
             OnStart(new SearchingProcessArgs());
             
-            switch (type)
-            { 
-                case "ex":
-                    FindedFiles = AllFindedFilesFromDirectory(directoryPath);
-                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr); 
-                    break;
-                case "beggins":
-                    FindedFiles = AllFindedFilesFromDirectory(directoryPath);
-                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr); 
-                    break;
-                case "contains":
-                    FindedFiles = AllFindedFilesFromDirectory(directoryPath);
-                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr); 
-                    break;
-                default:
-                    break;
-            }
+            FindedFiles = AllFindedFilesFromDirectory(directoryPath);
+            AllFilteredFilesFromDirectory(FindedFiles, parametr);
 
             ShowErrors();
 
@@ -120,10 +105,10 @@ namespace MentoringProgram
 
         public void ShowErrors()
         {
-            if (Errors.Count > 0)
+            if (errors.Count > 0)
             {
-                foreach (var error in Errors)
-                    Console.WriteLine(error.Value);
+                foreach (var error in errors)
+                    Console.WriteLine(error);
             }
         }
 
@@ -136,90 +121,69 @@ namespace MentoringProgram
         {
             var findedFiles = new List<UsingFile>();
 
-            try
+            var files = filesEnumerator.GetAllFilesByPath(folderName);
+            
+            if (files.Count() == 0)
+                errors.Add("Найдено 0 файлов/папок");
+
+            foreach (var file in files)
             {
-                var files = filesEnumerator.GetAllFilesByPath(folderName);
+                SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
 
-                if (files.Count() == 0)
-                    throw new IndexOutOfRangeException("Исключение");
-
-                foreach (var file in files)
+                if (file.IsFolder)
                 {
-                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
-
-                    if (file.IsFolder)
-                    {
-                        OnFolderFinded(args);
-
-                        if (args.SkipFlag)
-                            continue;
-                        else
-                            findedFiles.Add(file);
-                    }
+                    OnFolderFinded(args);
+                    
+                    if (args.SkipFlag)
+                        continue;
                     else
-                    {
-                        OnFileFinded(args);
-
-                        if (args.SkipFlag)
-                            continue;
-                        else
-                            findedFiles.Add(file);
-                    }
+                        findedFiles.Add(file);
                 }
-            }
-            catch (ArgumentException ex)
-            {
-                Errors.Add(ex.TargetSite.ToString(), ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Errors.Add(ex.TargetSite.ToString(), HelperConsts.CommonError);     
+                else
+                {
+                    OnFileFinded(args);
+
+                    if (args.SkipFlag)
+                        continue;
+                    else
+                        findedFiles.Add(file);
+                }
             }
 
             return findedFiles;
         }
 
-        public void AllFilteredFilesFromDirectory(Func<UsingFile, string, bool> Filter, IEnumerable<UsingFile> files, string filterDetail)
+        public void AllFilteredFilesFromDirectory(IEnumerable<UsingFile> files, string filterDetail)
         {
-            try
+            SearchingProcessArgs args = new SearchingProcessArgs();
+
+            foreach (var file in files)
             {
-                foreach (var file in files)
+                //проверка
+                if (!validator.IsValid(filterDetail))
+                    errors.Add("Вы ввели неправильное расширение файла");
+
+                args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
+
+                if (Filter(file, filterDetail))
                 {
-                    //проверка
-                    if (!validator.IsValid(filterDetail))
-                        throw new ArgumentException("Вы ввели неправильное расширение файла");
-
-                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
-
-                    if (Filter(file, filterDetail))
+                    if (file.IsFolder)
                     {
-                        if (file.IsFolder)
-                        {
-                            OnFilteredFolderFinded(args);
+                        OnFilteredFolderFinded(args);
 
-                            if (args.StopFlag)
-                                break;
-                        }
-                        else
-                        {
-                            OnFilteredFileFinded(args);
+                        if (args.StopFlag)
+                            break;
+                    }
+                    else
+                    {
+                        OnFilteredFileFinded(args);
 
-                            if (args.StopFlag)
-                                break;
-                        }
+                        if (args.StopFlag)
+                            break;
                     }
                 }
-            }
-            catch (ArgumentException ex)
-            {
-                //Запись ошибки в журнал ошибок
-                Errors.Add(ex.TargetSite.ToString(), ex.Message);
-            }
-            catch (Exception ex)
-            {
-                //Запись ошибки в журнал ошибок
-                Errors.Add(ex.TargetSite.ToString(), HelperConsts.CommonError);
-            }
+             }
+
         }
 
         /// <summary>

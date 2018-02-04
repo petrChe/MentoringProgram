@@ -23,7 +23,7 @@ namespace MentoringProgram1_Test
                                                (UsingFile file, string fileExtension) => file.Extension == fileExtension,
                                                Path);
 
-            visitor.StartWork("ex", ".txt", Path);
+            visitor.StartWork(".txt", Path);
 
                         
             Assert.IsNotNull(visitor.FindedFiles);
@@ -40,7 +40,7 @@ namespace MentoringProgram1_Test
                                                (UsingFile file, string fileExtension) => file.Extension == fileExtension,
                                                Path);
 
-            visitor.StartWork("efdsf", ".txt", Path);
+            visitor.StartWork(".txt", Path);
 
             Assert.IsNull(visitor.FindedFiles);
         }
@@ -56,7 +56,7 @@ namespace MentoringProgram1_Test
                                                (UsingFile file, string fileExtension) => file.Extension == fileExtension,
                                                Path);
 
-            visitor.StartWork("exf", ".wwwwwwwe", Path);
+            visitor.StartWork(".wwwwwwwe", Path);
 
             Assert.IsNull(visitor.FindedFiles);
         }        
