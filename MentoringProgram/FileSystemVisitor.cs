@@ -94,7 +94,8 @@ namespace MentoringProgram
         public void StartWork(string parametr, string directoryPath)
         {
             OnStart(new SearchingProcessArgs());
-            
+
+            // зачем свич если все 3 блока одинаковые....
             FindedFiles = AllFindedFilesFromDirectory(directoryPath);
             AllFilteredFilesFromDirectory(FindedFiles, parametr);
 

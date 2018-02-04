@@ -11,6 +11,7 @@ namespace MentoringProgram1
 {
     class Program
     {
+        // в целом со сценарием проблема
         static void Main(string[] args)
         {
             //Настройка кодировки
@@ -24,8 +25,9 @@ namespace MentoringProgram1
             FileSystemVisitor fileSystemVisitor = new FileSystemVisitor(filesEnumerator, filter, directoryPath);
             PrepareForSearching(fileSystemVisitor);
 
+            // Где шаблоны......
             //Фильтрация по методу расширения
-            Console.WriteLine("Введите расширение файла:");
+            Console.WriteLine("Введите расширение файла:"); // не хочу указывать хочу найти сразу и все без лишних вопросов 
             var extension = Console.ReadLine();
 
             fileSystemVisitor.StartWork(extension, fileSystemVisitor.Path);
@@ -37,7 +39,7 @@ namespace MentoringProgram1
                 return file.ShortName.Substring(0, lettersCount).ToLower() == beggining.ToLower();
             };
 
-            Console.WriteLine("Введите символ(ы) с которого(ых) должно начинаться имя файла/папки:");
+            Console.WriteLine("Введите символ(ы) с которого(ых) должно начинаться имя файла/папки:"); // не хочу я ничего фильтровать
             var begging = Console.ReadLine();
 
             fileSystemVisitor.StartWork(begging, fileSystemVisitor.Path);
@@ -45,7 +47,7 @@ namespace MentoringProgram1
             //Фильтрация по части имени файла
             fileSystemVisitor.Filter = (UsingFile file, string partOfName) => file.FileName.Contains(partOfName);
 
-            Console.WriteLine("Введите символ(ы) который(ые) присутствуют в имени файла/папки:");
+            Console.WriteLine("Введите символ(ы) который(ые) присутствуют в имени файла/папки:"); // аналогично
             var contains = Console.ReadLine();
 
             fileSystemVisitor.StartWork(contains, fileSystemVisitor.Path);
@@ -70,7 +72,7 @@ namespace MentoringProgram1
         #region Обработчики событий
         private static void Searching_Start(object sender, FileSystemVisitor.SearchingProcessArgs args)
         {
-            Console.WriteLine("Начало работы поиска");
+            Console.WriteLine("Начало работы поиска"); // TODO TODO TODO я писал убрать все эти магические буквы, используй файл расширения resx
         }
 
         private static void Searching_End(object sender, FileSystemVisitor.SearchingProcessArgs args)
@@ -127,7 +129,7 @@ namespace MentoringProgram1
         /// <param name="args"></param>
         public static void EnableFlags(HelperEnums.FlagTypes type, string answer, FileSystemVisitor.SearchingProcessArgs args)
         {
-            if(answer.ToLower() != "y" && answer.ToLower() != "n")
+            if(answer.ToLower() != "y" && answer.ToLower() != "n")// опять магические символы, завтра ты захочишь писатьна русском и полностью да нет, что делать будешь
             {
                 Console.WriteLine("Ошибка. Вы ввели неправильную информацию. Попробуйте снова");
                 EnableFlags(type, Console.ReadLine(), args);

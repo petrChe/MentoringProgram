@@ -56,7 +56,7 @@ namespace MentoringProgram
                 string fileExtension = Path.GetExtension(fileInfo.Name);
                 string filePath = string.Format(@"{0}\{1}", fileInfo.DirectoryName, fileInfo.Name);
                 DateTime lastModifDate = File.GetLastWriteTime(filePath);
-                UsingFile file = new UsingFile
+                UsingFile file = new UsingFile // создание несколько раз встречается подумаю как можно это оптимизировать
                 {
                     FileName = fileInfo.Name,
                     ShortName = Path.GetFileName(fileInfo.Name),
