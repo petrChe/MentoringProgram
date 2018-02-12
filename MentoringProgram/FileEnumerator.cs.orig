@@ -11,78 +11,46 @@ namespace MentoringProgram
 {
     public class FileEnumerator : IFilesEnumerator
     {
-<<<<<<< HEAD
+        //Словарь ошибок
+        private List<string> errors;
+
+        public FileEnumerator()
+        {
+            errors = new List<string>();
+        }
+
         /// <summary>
         /// Метод поиска файлов(файлы и папки) по передаваемому пути
         /// </summary>
         /// <param name="folderName"></param>
         /// <returns></returns>
         public IEnumerable<UsingFile> GetAllFilesByPath(string folderName)
-=======
-        // рефакторить
-        //Большой метод, рефакторить
-        public static IEnumerable<UsingFile> GetAllFilesByPath(string folderName)
->>>>>>> 6f479ddf46da8c9354d8477b8d8b71912c4ed8f0
         {
             List<UsingFile> files = new List<UsingFile>();
 
-            try
+            if (Directory.Exists(folderName))
             {
-                if (Directory.Exists(folderName))
-                {
-                    DirectoryInfo directory = new DirectoryInfo(folderName);
+                DirectoryInfo directory = new DirectoryInfo(folderName);
+                
+                GetDirectories(files, directory);
 
 <<<<<<< HEAD
+                GetFiles(files, directory);
+=======
                     GetDirectories(files, directory);
 
                     GetFiles(files, directory);
                 }
-                else
+                else // убрать такую валидацию..... 
                     throw new ArgumentException("Вы ввели неправильный путь директории");
-=======
-                    foreach (DirectoryInfo dirInfo in directory.GetDirectories())
-                    {
-                        string folderPath = string.Format(@"{0}\{1}", Path.GetDirectoryName(dirInfo.FullName), dirInfo.Name);
-                        DateTime lastModifDate = Directory.GetLastWriteTime(dirInfo.FullName);
-                        UsingFile folder = new UsingFile
-                        {
-                            FileName = dirInfo.FullName,
-                            ShortName = Path.GetFileName(dirInfo.FullName),
-                            LastModificationDateString = lastModifDate.ToString("dd.MM.yyyy"),
-                            IsFolder = true
-                        };
-                        files.Add(folder); // миллион мест добавления файла, что если ты решишь их помещать в новую коллекцию...
-
-                        if (Directory.EnumerateFileSystemEntries(folderPath).Any())
-                        {
-                            files.AddRange(GetAllFilesByPath(folderPath));
-                        }
-                    }
-
-                    foreach (FileInfo fileInfo in directory.GetFiles())
-                    {
-                        string fileExtension = Path.GetExtension(fileInfo.Name);
-                        string filePath = string.Format(@"{0}\{1}", fileInfo.DirectoryName, fileInfo.Name);
-                        DateTime lastModifDate = File.GetLastWriteTime(filePath);
-                        UsingFile file = new UsingFile
-                        {
-                            FileName = fileInfo.Name,
-                            ShortName = Path.GetFileName(fileInfo.Name),
-                            LastModificationDateString = lastModifDate.ToString("dd.MM.yyyy"), //что если формат захочу еще где то юзать
-                            Extension = fileExtension,
-                            IsFolder = false
-                        };
-                        files.Add(file);
-                    }
-                }
-                else
-                    throw new ArgumentException("Вы ввели неправильный путь"); // убрать все выводы подобного типа, используй словари
->>>>>>> 6f479ddf46da8c9354d8477b8d8b71912c4ed8f0
             }
             catch(ArgumentException)
             {
                 throw;
+>>>>>>> f9dfd0435e3e92edfa550d8777662a81cbab122f
             }
+            else
+                errors.Add("Вы ввели неправильный путь директории");
 
             foreach (var file in files)
                 yield return file;
@@ -101,7 +69,7 @@ namespace MentoringProgram
                 string fileExtension = Path.GetExtension(fileInfo.Name);
                 string filePath = string.Format(@"{0}\{1}", fileInfo.DirectoryName, fileInfo.Name);
                 DateTime lastModifDate = File.GetLastWriteTime(filePath);
-                UsingFile file = new UsingFile
+                UsingFile file = new UsingFile // создание несколько раз встречается подумаю как можно это оптимизировать
                 {
                     FileName = fileInfo.Name,
                     ShortName = Path.GetFileName(fileInfo.Name),

@@ -21,15 +21,15 @@ namespace MentoringProgram
 
         public IEnumerable<UsingFile> FindedFiles{ get; private set;}
 
-        //Словарь ошибок
-        private Dictionary<string, string> Errors;
+        //Коллекция ошибок
+        private List<string> errors;
 
         public FileSystemVisitor(IFilesEnumerator filesEnumerator, Func<UsingFile, string, bool> filter, string path)
         {
             this.filesEnumerator = filesEnumerator;
             this.filter = filter;
             this.path = path;
-            Errors = new Dictionary<string, string>();
+            errors = new List<string>();
         }
 
         #region events
@@ -50,13 +50,7 @@ namespace MentoringProgram
         protected virtual void OnFinish(SearchingProcessArgs args)
         {
             var tmp = FinishProcess;
-<<<<<<< HEAD
             RunEvent(tmp, args);
-=======
-            // повторяющийся код
-            if (tmp != null)
-                tmp(this, args);
->>>>>>> 6f479ddf46da8c9354d8477b8d8b71912c4ed8f0
         }
 
         protected virtual void OnFileFinded(SearchingProcessArgs args)
@@ -97,15 +91,24 @@ namespace MentoringProgram
         /// <param name="type"></param>
         /// <param name="parametr"></param>
         /// <param name="directoryPath"></param>
-        public void StartWork(string type, string parametr, string directoryPath)
+<<<<<<< HEAD
+        public void StartWork(string parametr, string directoryPath)
         {
             OnStart(new SearchingProcessArgs());
             
+            FindedFiles = AllFindedFilesFromDirectory(directoryPath);
+            AllFilteredFilesFromDirectory(FindedFiles, parametr);
+=======
+        public void StartWork(string type, string parametr, string directoryPath) 
+        {
+            OnStart(new SearchingProcessArgs());
+
+            // зачем свич если все 3 блока одинаковые....
             switch (type)
             { 
                 case "ex":
                     FindedFiles = AllFindedFilesFromDirectory(directoryPath);
-                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr); 
+                    AllFilteredFilesFromDirectory(Filter, FindedFiles, parametr);  // зачем передавать фильтр если это глобальная переменная
                     break;
                 case "beggins":
                     FindedFiles = AllFindedFilesFromDirectory(directoryPath);
@@ -118,6 +121,7 @@ namespace MentoringProgram
                 default:
                     break;
             }
+>>>>>>> f9dfd0435e3e92edfa550d8777662a81cbab122f
 
             ShowErrors();
 
@@ -126,10 +130,16 @@ namespace MentoringProgram
 
         public void ShowErrors()
         {
-            if (Errors.Count > 0)
+            if (errors.Count > 0)
             {
+<<<<<<< HEAD
+                foreach (var error in errors)
+                    Console.WriteLine(error);
+=======
+                // Ходят легенды что это быстрее он сам умеет многопоточность Errors.ToList().ForEach
                 foreach (var error in Errors)
                     Console.WriteLine(error.Value);
+>>>>>>> f9dfd0435e3e92edfa550d8777662a81cbab122f
             }
         }
 
@@ -142,99 +152,96 @@ namespace MentoringProgram
         {
             var findedFiles = new List<UsingFile>();
 
-            try
+            var files = filesEnumerator.GetAllFilesByPath(folderName);
+            
+            if (files.Count() == 0)
+                errors.Add("Найдено 0 файлов/папок");
+
+<<<<<<< HEAD
+            foreach (var file in files)
             {
-                var files = filesEnumerator.GetAllFilesByPath(folderName);
-
-                if (files.Count() == 0)
+                SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
+=======
+                if (files.Count() == 0)// Валидация не дожна заказчиваться выкидыванием исключения - переделать
                     throw new IndexOutOfRangeException("Исключение");
+>>>>>>> f9dfd0435e3e92edfa550d8777662a81cbab122f
 
-                foreach (var file in files)
+                if (file.IsFolder)
                 {
-                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
+<<<<<<< HEAD
+                    OnFolderFinded(args);
+                    
+                    if (args.SkipFlag)
+                        continue;
+=======
+                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString }; // зачем миллион раз создавать переменную, внутри цикла только операции, переделать
 
                     if (file.IsFolder)
                     {
-<<<<<<< HEAD
                         OnFolderFinded(args);
 
                         if (args.SkipFlag)
                             continue;
                         else
                             findedFiles.Add(file);
-=======
-                        SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
-                        OnFilteredFolderFinded(args);
-                        
-                        //я это уже видел....
-                        if (args.StopFlag)
-                            break;
->>>>>>> 6f479ddf46da8c9354d8477b8d8b71912c4ed8f0
                     }
+>>>>>>> f9dfd0435e3e92edfa550d8777662a81cbab122f
                     else
-                    {
-                        OnFileFinded(args);
-
-                        if (args.SkipFlag)
-                            continue;
-                        else
-                            findedFiles.Add(file);
-                    }
+                        findedFiles.Add(file);
                 }
-            }
-            catch (ArgumentException ex)
-            {
-                Errors.Add(ex.TargetSite.ToString(), ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Errors.Add(ex.TargetSite.ToString(), HelperConsts.CommonError);     
+                else
+                {
+                    OnFileFinded(args);
+
+                    if (args.SkipFlag)
+                        continue;
+                    else
+                        findedFiles.Add(file);
+                }
             }
 
             return findedFiles;
         }
 
-        public void AllFilteredFilesFromDirectory(Func<UsingFile, string, bool> Filter, IEnumerable<UsingFile> files, string filterDetail)
+        public void AllFilteredFilesFromDirectory(IEnumerable<UsingFile> files, string filterDetail)
         {
-            try
+            SearchingProcessArgs args = new SearchingProcessArgs();
+
+            foreach (var file in files)
             {
+<<<<<<< HEAD
+                //проверка
+                if (!validator.IsValid(filterDetail))
+                    errors.Add("Вы ввели неправильное расширение файла");
+
+                args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
+=======
                 foreach (var file in files)
                 {
                     //проверка
-                    if (!validator.IsValid(filterDetail))
+                    if (!validator.IsValid(filterDetail)) // Валидация не дожна заказчиваться выкидыванием исключения - переделать
                         throw new ArgumentException("Вы ввели неправильное расширение файла");
+>>>>>>> f9dfd0435e3e92edfa550d8777662a81cbab122f
 
-                    SearchingProcessArgs args = new SearchingProcessArgs { FileName = file.FileName, LastModificationDate = file.LastModificationDateString };
-
-                    if (Filter(file, filterDetail))
+                if (Filter(file, filterDetail))
+                {
+                    if (file.IsFolder)
                     {
-                        if (file.IsFolder)
-                        {
-                            OnFilteredFolderFinded(args);
+                        OnFilteredFolderFinded(args);
 
-                            if (args.StopFlag)
-                                break;
-                        }
-                        else
-                        {
-                            OnFilteredFileFinded(args);
+                        if (args.StopFlag)
+                            break;
+                    }
+                    else
+                    {
+                        OnFilteredFileFinded(args);
 
-                            if (args.StopFlag)
-                                break;
-                        }
+                        if (args.StopFlag)
+                            break;
                     }
                 }
-            }
-            catch (ArgumentException ex)
-            {
-                //Запись ошибки в журнал ошибок
-                Errors.Add(ex.TargetSite.ToString(), ex.Message);
-            }
-            catch (Exception ex)
-            {
-                //Запись ошибки в журнал ошибок
-                Errors.Add(ex.TargetSite.ToString(), HelperConsts.CommonError);
-            }
+             }
+
         }
 
         /// <summary>

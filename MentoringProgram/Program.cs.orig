@@ -11,6 +11,7 @@ namespace MentoringProgram1
 {
     class Program
     {
+        // в целом со сценарием проблема
         static void Main(string[] args)
         {
             //Настройка кодировки
@@ -24,11 +25,17 @@ namespace MentoringProgram1
             FileSystemVisitor fileSystemVisitor = new FileSystemVisitor(filesEnumerator, filter, directoryPath);
             PrepareForSearching(fileSystemVisitor);
 
+            // Где шаблоны......
             //Фильтрация по методу расширения
-            Console.WriteLine("Введите расширение файла:");
+            Console.WriteLine("Введите расширение файла:"); // не хочу указывать хочу найти сразу и все без лишних вопросов 
             var extension = Console.ReadLine();
+<<<<<<< HEAD
+
+            fileSystemVisitor.StartWork(extension, fileSystemVisitor.Path);
+=======
             
-            fileSystemVisitor.StartWork("ex", extension, fileSystemVisitor.Path);
+            fileSystemVisitor.StartWork("ex", extension, fileSystemVisitor.Path); //что за магические символы
+>>>>>>> f9dfd0435e3e92edfa550d8777662a81cbab122f
 
             //Фильтрация по началу имени файла/папки          
             fileSystemVisitor.Filter = (UsingFile file, string beggining) => 
@@ -37,18 +44,18 @@ namespace MentoringProgram1
                 return file.ShortName.Substring(0, lettersCount).ToLower() == beggining.ToLower();
             };
 
-            Console.WriteLine("Введите символ(ы) с которого(ых) должно начинаться имя файла/папки:");
+            Console.WriteLine("Введите символ(ы) с которого(ых) должно начинаться имя файла/папки:"); // не хочу я ничего фильтровать
             var begging = Console.ReadLine();
 
-            fileSystemVisitor.StartWork("beggins", begging, fileSystemVisitor.Path);
+            fileSystemVisitor.StartWork(begging, fileSystemVisitor.Path);
 
             //Фильтрация по части имени файла
             fileSystemVisitor.Filter = (UsingFile file, string partOfName) => file.FileName.Contains(partOfName);
 
-            Console.WriteLine("Введите символ(ы) который(ые) присутствуют в имени файла/папки:");
+            Console.WriteLine("Введите символ(ы) который(ые) присутствуют в имени файла/папки:"); // аналогично
             var contains = Console.ReadLine();
-            
-            fileSystemVisitor.StartWork("contains", contains, fileSystemVisitor.Path);
+
+            fileSystemVisitor.StartWork(contains, fileSystemVisitor.Path);
 
             Console.ReadKey();
         }
@@ -70,7 +77,7 @@ namespace MentoringProgram1
         #region Обработчики событий
         private static void Searching_Start(object sender, FileSystemVisitor.SearchingProcessArgs args)
         {
-            Console.WriteLine("Начало работы поиска");
+            Console.WriteLine("Начало работы поиска"); // TODO TODO TODO я писал убрать все эти магические буквы, используй файл расширения resx
         }
 
         private static void Searching_End(object sender, FileSystemVisitor.SearchingProcessArgs args)
@@ -95,15 +102,7 @@ namespace MentoringProgram1
             Console.WriteLine("Исключить файл из конечного списка? y - да, n - нет");
             var answer = Console.ReadLine();
 
-<<<<<<< HEAD
             EnableFlags(HelperEnums.FlagTypes.SkipFlag, answer, args);
-=======
-            // что если я введу что либо не удослетворющее обоим условиям
-            if (answer.ToLower() == "y")
-                args.SkipFlag = true;
-            else if (answer.ToLower() == "n")
-                args.SkipFlag = false;
->>>>>>> 6f479ddf46da8c9354d8477b8d8b71912c4ed8f0
         }
 
         private static void Directory_Finded(object sender, FileSystemVisitor.SearchingProcessArgs args)
@@ -113,15 +112,7 @@ namespace MentoringProgram1
             Console.WriteLine("Исключить папку из конечного списка? y - да, n - нет");
             var answer = Console.ReadLine();
 
-<<<<<<< HEAD
             EnableFlags(HelperEnums.FlagTypes.SkipFlag, answer, args);
-=======
-            // одно и то же 1000 раз, рефакторить
-            if (answer.ToLower() == "y")
-                args.SkipFlag = true;
-            else if (answer.ToLower() == "n")
-                args.SkipFlag = false;
->>>>>>> 6f479ddf46da8c9354d8477b8d8b71912c4ed8f0
         }
 
         protected static void FilteredDirectory_Finded(object sender, FileSystemVisitor.SearchingProcessArgs args)
@@ -143,7 +134,7 @@ namespace MentoringProgram1
         /// <param name="args"></param>
         public static void EnableFlags(HelperEnums.FlagTypes type, string answer, FileSystemVisitor.SearchingProcessArgs args)
         {
-            if(answer.ToLower() != "y" && answer.ToLower() != "n")
+            if(answer.ToLower() != "y" && answer.ToLower() != "n")// опять магические символы, завтра ты захочишь писатьна русском и полностью да нет, что делать будешь
             {
                 Console.WriteLine("Ошибка. Вы ввели неправильную информацию. Попробуйте снова");
                 EnableFlags(type, Console.ReadLine(), args);
