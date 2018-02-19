@@ -1,0 +1,6 @@
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram5\obj\Debug\MentoringProgram5.csprojResolveAssemblyReference.cache
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram5\bin\Debug\MentoringProgram5.exe.config
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram5\bin\Debug\MentoringProgram5.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram5\bin\Debug\MentoringProgram5.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram5\obj\Debug\MentoringProgram5.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram5\obj\Debug\MentoringProgram5.pdb

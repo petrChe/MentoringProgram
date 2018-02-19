@@ -1,0 +1,13 @@
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
