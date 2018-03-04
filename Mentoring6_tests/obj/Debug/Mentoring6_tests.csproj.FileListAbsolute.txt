@@ -1,0 +1,5 @@
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_tests\bin\Debug\Mentoring6_tests.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_tests\bin\Debug\Mentoring6_tests.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_tests\obj\Debug\Mentoring6_tests.csprojResolveAssemblyReference.cache
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_tests\obj\Debug\Mentoring6_tests.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_tests\obj\Debug\Mentoring6_tests.pdb

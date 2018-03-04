@@ -1,0 +1,10 @@
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\bin\Debug\Mentoring6.exe.config
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\bin\Debug\Mentoring6.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\bin\Debug\Mentoring6.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\bin\Debug\Mentoring6_storing_system.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\bin\Debug\Mentoring6_xml_reader_writer.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\bin\Debug\Mentoring6_storing_system.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\bin\Debug\Mentoring6_xml_reader_writer.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\obj\Debug\Mentoring6.csprojResolveAssemblyReference.cache
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\obj\Debug\Mentoring6.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6\obj\Debug\Mentoring6.pdb

@@ -1,0 +1,6 @@
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram6_storing_system\bin\Debug\MentoringProgram6_storing_system.exe.config
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram6_storing_system\bin\Debug\MentoringProgram6_storing_system.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram6_storing_system\bin\Debug\MentoringProgram6_storing_system.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram6_storing_system\obj\Debug\MentoringProgram6_storing_system.csprojResolveAssemblyReference.cache
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram6_storing_system\obj\Debug\MentoringProgram6_storing_system.exe
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\MentoringProgram6_storing_system\obj\Debug\MentoringProgram6_storing_system.pdb

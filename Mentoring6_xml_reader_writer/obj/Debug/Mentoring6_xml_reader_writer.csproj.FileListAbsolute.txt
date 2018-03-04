@@ -1,0 +1,7 @@
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_xml_reader_writer\bin\Debug\Mentoring6_xml_reader_writer.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_xml_reader_writer\bin\Debug\Mentoring6_xml_reader_writer.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_xml_reader_writer\obj\Debug\Mentoring6_xml_reader_writer.csprojResolveAssemblyReference.cache
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_xml_reader_writer\obj\Debug\Mentoring6_xml_reader_writer.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_xml_reader_writer\obj\Debug\Mentoring6_xml_reader_writer.pdb
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_xml_reader_writer\bin\Debug\Mentoring6_storing_system.dll
+C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring6_xml_reader_writer\bin\Debug\Mentoring6_storing_system.pdb
