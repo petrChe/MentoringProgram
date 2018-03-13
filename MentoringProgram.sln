@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentoring6_xml_reader_write
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentoring6_tests", "Mentoring6_tests\Mentoring6_tests.csproj", "{29975982-2149-4398-B349-A09F5C00D9DA}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Mentoring7_BasicSql", "Mentoring7_BasicSql\Mentoring7_BasicSql.sqlproj", "{E9566324-6ABC-4441-866A-61C1BC8E78F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentoring8_Ado_net", "Mentoring8_Ado_net\Mentoring8_Ado_net.csproj", "{D5636BD3-3EC6-47F9-A2A1-F374C6C6A1A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,16 @@ Global
 		{29975982-2149-4398-B349-A09F5C00D9DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29975982-2149-4398-B349-A09F5C00D9DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29975982-2149-4398-B349-A09F5C00D9DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9566324-6ABC-4441-866A-61C1BC8E78F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9566324-6ABC-4441-866A-61C1BC8E78F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9566324-6ABC-4441-866A-61C1BC8E78F3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E9566324-6ABC-4441-866A-61C1BC8E78F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9566324-6ABC-4441-866A-61C1BC8E78F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9566324-6ABC-4441-866A-61C1BC8E78F3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D5636BD3-3EC6-47F9-A2A1-F374C6C6A1A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5636BD3-3EC6-47F9-A2A1-F374C6C6A1A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5636BD3-3EC6-47F9-A2A1-F374C6C6A1A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5636BD3-3EC6-47F9-A2A1-F374C6C6A1A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,13 @@
+3/9/2018 1:59:01 PM	This log contains information about the import operation of the script 'instnwnd.sql' into project 'Mentoring7_BasicSql' on computer 'EPKZKARW0364' by user'Petr_Chebanenko.
+3/9/2018 1:59:02 PM	Started importing file: F:\07. Basic SQL\Task\instnwnd.sql 
+3/9/2018 1:59:02 PM	File name F:\07. Basic SQL\Task\instnwnd.sql (size: 2115020)
+3/9/2018 1:59:02 PM	Parsing import script
+3/9/2018 1:59:03 PM	Total number of batches in script: 397
+3/9/2018 1:59:03 PM	Total number of statements in script: 72
+3/9/2018 1:59:03 PM	The script was successfully imported into the project.
+3/9/2018 1:59:03 PM	Analyzing schema objects...
+3/9/2018 1:59:03 PM	Scanning project for duplicate elements
+3/9/2018 1:59:03 PM	Finished duplicate element processing
+3/9/2018 1:59:03 PM	In the script that you provided to the import operation, one or more statements were not fully understood. These statements were moved to the ScriptsIgnoredOnImport.sql file. Review the file contents for additional information.
+3/9/2018 1:59:03 PM	A summary of the import was saved to the following location: C:\Users\Petr_Chebanenko\documents\visual studio 2012\Projects\MentoringProgram\Mentoring7_BasicSql\Import Script Logs\instnwnd_sql_20180309075901.log
+3/9/2018 1:59:03 PM	Click Finish to continue...
