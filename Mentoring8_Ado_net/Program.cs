@@ -17,8 +17,8 @@ namespace Mentoring8_Ado_net
             var orders = or.GetOrders();
             var order = or.GetOrderDetails(10250);
             //Identity insert on. Решил так попробовать. Id надо выбрать другой.
-            //var insrt = or.CreateNewOrder(55556, null);
-            //var updt = or.UpdateNewRequestShipCountry(55556, "Neverland"); 
+            var insrt = or.CreateNewOrder(55556, null);
+            var updt = or.UpdateNewRequestShipCountry(55556, "Neverland"); 
             var orderProc = or.CustOrdersDetail(10250);
             var custOrderHistProc = or.CustOrderHist("ALFKI");
             Console.ReadKey();

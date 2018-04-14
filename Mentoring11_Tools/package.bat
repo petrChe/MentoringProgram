@@ -1,0 +1,1 @@
+nuget pack Mentoring11_Tools.csproj -Properties Configuration=Release -Build -OutputDirectory .\Bin

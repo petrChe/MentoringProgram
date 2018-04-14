@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SourceAnalyzer Name="My custom rule">
+  <Description>
+    My custom rule description
+  </Description>
+  <Rules>
+    <Rule Name="MyCustomRule" CheckId="IS0001">
+      <Context>Class must be public, with public properties name and id and have data contract attribute</Context>
+      <Description>Class must be public, with public properties name and id and have data contract attribute</Description>
+    </Rule>
+  </Rules>
+</SourceAnalyzer>
